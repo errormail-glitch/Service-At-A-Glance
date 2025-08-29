@@ -7,152 +7,175 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
     }
     header {
-      background: #007bff; color: white; padding: 20px; text-align: center;
+      background: #007BFF;
+      color: white;
+      padding: 15px;
+      text-align: center;
     }
     section {
-      padding: 20px; margin: 20px; background: white;
-      border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 10px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
     }
-    h2 { color: #007bff; }
+    h2 {
+      color: #007BFF;
+    }
     table {
-      width: 100%; border-collapse: collapse; margin-top: 15px;
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
     }
     th, td {
-      padding: 10px; border: 1px solid #ddd; text-align: left;
+      padding: 10px;
+      text-align: left;
     }
-    th { background: #007bff; color: white; }
-    input, button, textarea {
-      padding: 10px; margin: 5px 0; width: 100%;
-      border: 1px solid #ccc; border-radius: 5px;
+    th {
+      background: #007BFF;
+      color: white;
     }
     button {
-      background: #007bff; color: white; cursor: pointer;
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    button:hover { background: #0056b3; }
-    /* Popup Form */
-    #bookingPopup {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5); justify-content: center; align-items: center;
+    button:hover {
+      background: #218838;
     }
-    #bookingForm {
-      background: white; padding: 20px; border-radius: 8px; width: 300px;
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
     }
-    #closeBtn {
-      float: right; cursor: pointer; color: red; font-weight: bold;
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Service at a Glance</h1>
-    <p>One-stop solution for your services</p>
-  </header>
+<header>
+  <h1>Service at a Glance</h1>
+  <p>One place for Doctors, Medicines, and Daily Services</p>
+</header>
 
-  <!-- Doctor Section -->
-  <section id="appointment">
-    <h2>Doctor's Appointment</h2>
-    <p>Find the right doctor and book appointments easily.</p>
+<!-- Doctor Section -->
+<section>
+  <h2>Doctors Appointment</h2>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Specialist</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Timing</th>
+      <th>Fee</th>
+      <th>Action</th>
+    </tr>
+    <tr>
+      <td>Dr. Ravi Shankar Singh</td>
+      <td>Baby Specialist</td>
+      <td>86******71</td>
+      <td>Old Chirai Ghar Rd, Railway Colony, Daroga rai chowk, Chapra</td>
+      <td>9am - 7pm</td>
+      <td>₹300</td>
+      <td><button>Book</button></td>
+    </tr>
+    <tr>
+      <td>Dr. Renu Kashyap</td>
+      <td>Women Specialist</td>
+      <td>79******56</td>
+      <td>Near Jyoti Cinema, Sadhnapuri, Chapra</td>
+      <td>24x7</td>
+      <td>₹999</td>
+      <td><button>Book</button></td>
+    </tr>
+    <tr>
+      <td>Dr. Prakash Thakur</td>
+      <td>Chest, Heart, Kidney, Diabetes etc.</td>
+      <td>75*****654</td>
+      <td>Ramlila Mathia, Near Hotel Raj Lakshmi, Chapra</td>
+      <td>9am - 8pm</td>
+      <td>₹700</td>
+      <td><button>Book</button></td>
+    </tr>
+  </table>
+</section>
 
-    <!-- 🔍 Search Box -->
-    <input type="text" id="doctorSearch" placeholder="Search by name or specialization...">
+<!-- Medicine Section -->
+<section>
+  <h2>Medicines</h2>
+  <table>
+    <tr>
+      <th>Medicine Name</th>
+      <th>MRP</th>
+      <th>Discount Price</th>
+    </tr>
+    <tr>
+      <td>Paracetamol 500mg</td>
+      <td>₹20</td>
+      <td>₹15</td>
+    </tr>
+    <tr>
+      <td>Dolo-650</td>
+      <td>₹35</td>
+      <td>₹28</td>
+    </tr>
+    <tr>
+      <td>Crocin Advance</td>
+      <td>₹30</td>
+      <td>₹24</td>
+    </tr>
+    <tr>
+      <td>Azithromycin 500</td>
+      <td>₹120</td>
+      <td>₹95</td>
+    </tr>
+  </table>
+</section>
 
-    <table id="doctorTable">
-      <thead>
-        <tr>
-          <th>Doctor Name</th>
-          <th>Specialization</th>
-          <th>Contact</th>
-          <th>Address</th>
-          <th>Timing</th>
-          <th>Fees (₹)</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Dr. Ravi Shankar Singh</td>
-          <td>Baby Specialist</td>
-          <td>86******71</td>
-          <td>Old Chirai Ghar Rd, Railway Colony, Daroga Rai Chowk, Chapra, Bihar 841301</td>
-          <td>9am – 7pm</td>
-          <td>300</td>
-          <td><button onclick="openBooking('Dr. Ravi Shankar Singh')">Book</button></td>
-        </tr>
-        <tr>
-          <td>Dr. Renu Kashyap</td>
-          <td>Women Specialist</td>
-          <td>79******56</td>
-          <td>QPMQ+FPC, near Jyoti cinema, Sadhnapuri, Sadhapur, Chapra, Bihar 841301</td>
-          <td>24x7</td>
-          <td>999</td>
-          <td><button onclick="openBooking('Dr. Renu Kashyap')">Book</button></td>
-        </tr>
-        <tr>
-          <td>Dr. Prakash Thakur</td>
-          <td>Chest, Stomach, Heart, Kidney, Liver, Nerve, Diabetes</td>
-          <td>75*****654</td>
-          <td>RAMLILA MATHIA, NORTH OF ZILA SCHOOL, NH 31, near HOTEL RAJ LAKSHMI, Chapra, Bihar 841301</td>
-          <td>9am – 8pm</td>
-          <td>700</td>
-          <td><button onclick="openBooking('Dr. Prakash Thakur')">Book</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+<!-- Services Section -->
+<section>
+  <h2>Other Services</h2>
+  <ul>
+    <li>AC Service</li>
+    <li>Car Service</li>
+    <li>Bike Service</li>
+    <li>Recharge</li>
+    <li>Ration</li>
+  </ul>
+</section>
 
-  <!-- Booking Popup -->
-  <div id="bookingPopup">
-    <div id="bookingForm">
-      <span id="closeBtn" onclick="closeBooking()">X</span>
-      <h3>Book Appointment</h3>
-      <form id="appointmentForm">
-        <label>Doctor</label>
-        <input type="text" id="doctorName" readonly>
-        <label>Your Name</label>
-        <input type="text" id="patientName" required>
-        <label>Mobile</label>
-        <input type="tel" id="mobile" required>
-        <label>Date</label>
-        <input type="date" id="date" required>
-        <label>Time</label>
-        <input type="time" id="time" required>
-        <button type="submit">Confirm Booking</button>
-      </form>
-    </div>
-  </div>
+<!-- Contact Section -->
+<section>
+  <h2>Contact Us</h2>
+  <p><b>Phone:</b> <a href="tel:+919905761688">+91 99057 61688</a></p>
+  <p><b>Email:</b> <a href="mailto:errormail.gamer@gmail.com">errormail.gamer@gmail.com</a></p>
+  <p><b>Address:</b> Nagina Singh colony, near Hotel Amitansh, Gudri Bazar, Chapra, Bihar - 841301</p>
+  <p><b>Google Map:</b> <a href="https://maps.google.com/?q=Nagina+Singh+Colony,+Gudri+Bazar,+Chapra,+Bihar+841301" target="_blank">View Location</a></p>
+</section>
 
-  <script>
-    // 🔍 Doctor Search
-    document.getElementById("doctorSearch").addEventListener("keyup", function() {
-      let filter = this.value.toLowerCase();
-      let rows = document.querySelectorAll("#doctorTable tbody tr");
-      rows.forEach(row => {
-        let text = row.innerText.toLowerCase();
-        row.style.display = text.includes(filter) ? "" : "none";
-      });
-    });
-
-    // 📅 Booking Popup
-    function openBooking(doctor) {
-      document.getElementById("doctorName").value = doctor;
-      document.getElementById("bookingPopup").style.display = "flex";
-    }
-    function closeBooking() {
-      document.getElementById("bookingPopup").style.display = "none";
-    }
-
-    // 📝 Booking Submit
-    document.getElementById("appointmentForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("✅ Appointment booked successfully with " + document.getElementById("doctorName").value);
-      closeBooking();
-    });
-  </script>
+<footer>
+  <p>&copy; 2025 Service at a Glance. All rights reserved.</p>
+</footer>
 
 </body>
 </html>
