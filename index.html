@@ -1,197 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Service At A Glance</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f8f9fa;
-    }
-
-    header {
-      background: #0077b6;
-      color: white;
-      padding: 15px;
-      text-align: center;
-    }
-
-    h2 {
-      background: #0096c7;
-      color: white;
-      padding: 10px;
-      margin: 0;
-      text-align: center;
-    }
-
-    section {
-      padding: 15px;
-    }
-
-    /* General Table */
-    .responsive-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    .responsive-table th,
-    .responsive-table td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      .responsive-table thead {
-        display: none;
-      }
-      .responsive-table,
-      .responsive-table tbody,
-      .responsive-table tr,
-      .responsive-table td {
-        display: block;
-        width: 100%;
-      }
-      .responsive-table tr {
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px;
-        background: #fff;
-      }
-      .responsive-table td {
-        text-align: right;
-        padding-left: 50%;
-        position: relative;
-      }
-      .responsive-table td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 10px;
-        width: 45%;
-        text-align: left;
-        font-weight: bold;
-      }
-    }
-
-    footer {
-      background: #023e8a;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 20px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Service At A Glance</title>
+<meta name="description" content="Doctors, Medicines, Daily Services — Chapra, Bihar">
+<style>
+  :root{
+    --brand:#0d6efd; --brand2:#0aa6c8; --ok:#22c55e; --danger:#ef4444; --ink:#1f2937; --bg:#f6f7fb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;text-align:center;padding:28px 16px}
+  header h1{margin:0 0 6px;font-size:28px;letter-spacing:.5px}
+  header p{margin:0;opacity:.95}
+  section.card{background:#fff;margin:16px;border-radius:14px;padding:16px;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+  h2.section-title{margin:0 0 12px;color:#fff;background:var(--brand);padding:10px 14px;border-radius:10px;display:inline-block}
+  .grid{display:grid;gap:12px}
+  .btn{appearance:none;border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600}
+  .btn.whatsapp{background:#25D366;color:#fff}
+  .btn.primary{background:var(--brand);color:#fff}
+  .btn.ghost{background:#eef2ff;color:#111}
+  .btn.danger{background:var(--danger);color:#fff}
+  input,select,textarea{width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fff}
+  label{font-size:13px;color:#475569;margin-top:8px;display:block}
+  .small{font-size:12px;color:#64748b}
+  /* Doctor cards */
+  .docs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:1000px){.docs{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.docs{grid-template-columns:1fr}}
+  .doc{border:1px solid #e5e7eb;border-radius:12px;padding:12px;background:#fff}
+  .doc h3{margin:0 0 6px;font-size:18px;color:#0f172a}
+  .kv{display:grid;grid-template-columns:120px 1fr;gap:6px;font-size:14px}
+  .kv div:nth-child(odd){color:#64748b}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  /* Tables (Medicines) */
+  table{width:100%;border-collapse:collapse;table-layout:fixed;background:#fff;border-radius:12px;overflow:hidden}
+  th,td{border:1px solid #e5e7eb;padding:10px;text-align:left;word-wrap:break-word}
+  th{background:#f3f4f6}
+  @media (max-width:640px){
+    table thead{display:none}
+    table,tbody,tr,td{display:block;width:100%}
+    tr{border:1px solid #e5e7eb;border-radius:12px;margin:10px 0;padding:8px;background:#fff}
+    td{border:0;border-bottom:1px dashed #e5e7eb;padding:8px 10px;position:relative;padding-left:46%}
+    td:last-child{border-bottom:0}
+    td::before{content:attr(data-label);position:absolute;left:10px;top:8px;font-weight:600;color:#475569;width:42%}
+  }
+  /* Modal */
+  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.5);padding:16px;z-index:50}
+  .modal .box{background:#fff;border-radius:14px;max-width:520px;width:100%;padding:16px}
+  .modal.show{display:grid}
+  footer{background:#0b1220;color:#cbd5e1;text-align:center;padding:18px;margin-top:20px}
+  .chip{display:inline-block;background:#e7f5ff;color:#0369a1;padding:3px 8px;border-radius:999px;font-size:12px;margin:2px 4px 0 0}
+</style>
 </head>
 <body>
 
 <header>
   <h1>Service At A Glance</h1>
-  <p>All Services — Doctors, Medicines, Recharge, Ration & More</p>
+  <p>Doctors • Medicines • Daily Services — Chapra, Bihar</p>
 </header>
 
-<!-- Doctor Section -->
-<h2>Doctor Appointment</h2>
-<section>
-  <table class="responsive-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Speciality</th>
-        <th>Contact</th>
-        <th>Address</th>
-        <th>Timing</th>
-        <th>Fees</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-label="Name">Dr. Ravi Shankar Singh</td>
-        <td data-label="Speciality">Baby specialist</td>
-        <td data-label="Contact">86******71</td>
-        <td data-label="Address">Old Chirai Ghar Rd, Railway Colony, Chapra</td>
-        <td data-label="Timing">9am - 7pm</td>
-        <td data-label="Fees">₹300</td>
-      </tr>
-      <tr>
-        <td data-label="Name">Dr. Renu Kashyap</td>
-        <td data-label="Speciality">Women specialist</td>
-        <td data-label="Contact">79******56</td>
-        <td data-label="Address">Near Jyoti Cinema, Sadhnapuri, Chapra</td>
-        <td data-label="Timing">24x7</td>
-        <td data-label="Fees">₹999</td>
-      </tr>
-      <tr>
-        <td data-label="Name">Dr. Prakash Thakur</td>
-        <td data-label="Speciality">Chest, Heart, Kidney, Diabetes</td>
-        <td data-label="Contact">75*****654</td>
-        <td data-label="Address">Ramlila Mathia, Near Hotel Raj Lakshmi, Chapra</td>
-        <td data-label="Timing">9am - 8pm</td>
-        <td data-label="Fees">₹700</td>
-      </tr>
-    </tbody>
-  </table>
+<!-- DOCTORS -->
+<section class="card" id="appointment">
+  <h2 class="section-title">Doctor Appointment</h2>
+  <div class="docs" id="doctorCards">
+    <!-- Dr 1 -->
+    <article class="doc">
+      <h3>Dr. Ravi Shankar Singh</h3>
+      <div class="chip">Baby Specialist</div>
+      <div class="kv" style="margin-top:6px">
+        <div>Contact</div><div>86******71</div>
+        <div>Address</div><div>Old Chirai Ghar Rd, Railway Colony, Daroga Rai Chowk, Chapra, Bihar 841301</div>
+        <div>Timing</div><div>9am – 7pm</div>
+        <div>Fees</div><div>₹300</div>
+      </div>
+      <div class="actions">
+        <button class="btn whatsapp" onclick="waBook('Dr. Ravi Shankar Singh')">Book on WhatsApp</button>
+        <button class="btn primary" onclick="openBooking('Dr. Ravi Shankar Singh')">Book via Form</button>
+      </div>
+    </article>
+    <!-- Dr 2 -->
+    <article class="doc">
+      <h3>Dr. Renu Kashyap</h3>
+      <div class="chip">Women Specialist</div>
+      <div class="kv" style="margin-top:6px">
+        <div>Contact</div><div>79******56</div>
+        <div>Address</div><div>QPMQ+FPC, near Jyoti cinema, Sadhnapuri, Sadhapur, Chapra, Bihar 841301</div>
+        <div>Timing</div><div>24×7</div>
+        <div>Fees</div><div>₹999</div>
+      </div>
+      <div class="actions">
+        <button class="btn whatsapp" onclick="waBook('Dr. Renu Kashyap')">Book on WhatsApp</button>
+        <button class="btn primary" onclick="openBooking('Dr. Renu Kashyap')">Book via Form</button>
+      </div>
+    </article>
+    <!-- Dr 3 -->
+    <article class="doc">
+      <h3>Dr. Prakash Thakur</h3>
+      <div class="chip">Chest, Stomach, Heart, Kidney, Liver, Nerve, Diabetes</div>
+      <div class="kv" style="margin-top:6px">
+        <div>Contact</div><div>75*****654</div>
+        <div>Address</div><div>RAMLILA MATHIA, NORTH OF ZILA SCHOOL, NH 31, near HOTEL RAJ LAKSHMI, Chapra, Bihar 841301</div>
+        <div>Timing</div><div>9am – 8pm</div>
+        <div>Fees</div><div>₹700</div>
+      </div>
+      <div class="actions">
+        <button class="btn whatsapp" onclick="waBook('Dr. Prakash Thakur')">Book on WhatsApp</button>
+        <button class="btn primary" onclick="openBooking('Dr. Prakash Thakur')">Book via Form</button>
+      </div>
+    </article>
+  </div>
 </section>
 
-<!-- Medicine Section -->
-<h2>Medicines</h2>
-<section>
-  <table class="responsive-table">
-    <thead>
-      <tr>
-        <th>Medicine Name</th>
-        <th>MRP</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-label="Medicine Name">Paracetamol 500mg</td>
-        <td data-label="MRP">₹20</td>
-      </tr>
-      <tr>
-        <td data-label="Medicine Name">Amoxicillin 250mg</td>
-        <td data-label="MRP">₹45</td>
-      </tr>
-      <tr>
-        <td data-label="Medicine Name">Cough Syrup</td>
-        <td data-label="MRP">₹60</td>
-      </tr>
-      <tr>
-        <td data-label="Medicine Name">Vitamin C Tablets</td>
-        <td data-label="MRP">₹80</td>
-      </tr>
-    </tbody>
-  </table>
+<!-- MEDICINES -->
+<section class="card" id="medicine">
+  <h2 class="section-title">Medicines (Sample)</h2>
+  <div class="small" style="margin:4px 0 10px">Flat 20% discount लागू (Final Price auto-calc)। नीचे “Add Medicine” से नई एंट्री जोड़ें।</div>
+  <div class="grid" style="grid-template-columns:1fr 200px 180px">
+    <div><b>Search Medicines</b><input id="medSearch" placeholder="type to filter..."></div>
+    <div><b>MRP ≥</b><input id="minMrp" type="number" placeholder="0"></div>
+    <div style="align-self:end"><button class="btn ghost" onclick="filterMeds()">Apply Filter</button></div>
+  </div>
+  <div style="overflow-x:auto;margin-top:10px">
+    <table id="medTable">
+      <thead><tr><th>Name</th><th>MRP (₹)</th><th>Discount %</th><th>Final Price (₹)</th></tr></thead>
+      <tbody id="medBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Add medicine -->
+  <details style="margin-top:12px">
+    <summary style="cursor:pointer;font-weight:700">➕ Add Medicine</summary>
+    <div class="grid" style="grid-template-columns:2fr 1fr 1fr">
+      <div><label>Name</label><input id="newMedName" placeholder="e.g. Dolo-650"></div>
+      <div><label>MRP (₹)</label><input id="newMedMrp" type="number" min="0"></div>
+      <div><label>Discount %</label><input id="newMedDisc" type="number" min="0" max="90" value="20"></div>
+    </div>
+    <div class="actions" style="margin-top:8px">
+      <button class="btn primary" onclick="addMedicine()">Add to List</button>
+      <button class="btn whatsapp" onclick="saveMedicine()">Save to Sheet</button>
+    </div>
+    <div class="small">“Save to Sheet” दबाने पर medicine आपके Google Sheet में सेव होगी (नीचे SCRIPT URL सेट करें).</div>
+  </details>
 </section>
 
-<!-- Services Section -->
-<h2>Services</h2>
-<section>
-  <ul>
-    <li>AC Service</li>
-    <li>Car Service</li>
-    <li>Bike Service</li>
-    <li>Recharge Service</li>
-    <li>Ration Delivery</li>
-  </ul>
+<!-- OTHER SERVICES -->
+<section class="card" id="services">
+  <h2 class="section-title">Other Services</h2>
+  <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+    <ul style="margin:0">
+      <li>✅ AC Service</li>
+      <li>✅ Car Service</li>
+      <li>✅ Bike Service</li>
+    </ul>
+    <ul style="margin:0">
+      <li>✅ Recharge (Mobile/DTH)</li>
+      <li>✅ Ration Delivery</li>
+    </ul>
+  </div>
 </section>
 
-<!-- Contact Section -->
-<h2>Contact Us</h2>
-<section>
-  <p><b>Phone:</b> +91 99057 61688</p>
-  <p><b>Email:</b> errormail.gamer@gmail.com</p>
-  <p><b>Address:</b> Nagina Singh colony, Near Hotel Amitansh, Gudri Bazar, Chapra, Bihar-841301</p>
+<!-- CONTACT -->
+<section class="card" id="contact">
+  <h2 class="section-title">Contact Us</h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div>
+      <p><b>Phone:</b> <a href="tel:+919905761688">+91 99057 61688</a></p>
+      <p><b>Email:</b> <a href="mailto:errormail.gamer@gmail.com">errormail.gamer@gmail.com</a></p>
+      <p><b>Address:</b> Nagina Singh colony, near Hotel Amitansh, Gudri Bazar, Chapra, Bihar - 841301</p>
+    </div>
+    <div class="actions" style="align-items:flex-start">
+      <a class="btn whatsapp" style="text-decoration:none;display:inline-block"
+         href="https://wa.me/919905761688?text=Hi%20Service%20At%20A%20Glance%2C%20I%20need%20help."
+         target="_blank" rel="noopener">Chat on WhatsApp</a>
+      <a class="btn ghost" style="text-decoration:none;display:inline-block"
+         href="https://maps.google.com/?q=Nagina+Singh+Colony,+Gudri+Bazar,+Chapra,+Bihar+841301" target="_blank" rel="noopener">Open in Maps</a>
+    </div>
+  </div>
 </section>
 
-<footer>
-  <p>© 2025 Service At A Glance | All Rights Reserved</p>
-</footer>
+<footer>© 2025 Service At A Glance — Chapra, Bihar</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal" id="bookingModal" aria-hidden="true">
+  <div class="box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <h3 style="margin:0">Book Appointment</h3>
+      <button class="btn danger" onclick="closeBooking()">Close</button>
+    </div>
+    <form id="bookForm">
+      <input type="hidden" id="selDoctor">
+      <label>Doctor</label>
+      <input id="doctorReadonly" readonly>
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div>
+          <label>Your Name</label>
+          <input id="pName" required>
+        </div>
+        <div>
+          <label>Mobile</label>
+          <input id="pMobile" type="tel" required>
+        </div>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div>
+          <label>Date</label>
+          <input id="pDate" type="date" required>
+        </div>
+        <div>
+          <label>Time</label>
+          <input id="pTime" type="time" required>
+        </div>
+      </div>
+      <label>Problem / Notes</label>
+      <textarea id="pProblem" rows="3" placeholder="briefly describe your problem"></textarea>
+      <div class="actions" style="margin-top:10px">
+        <button type="button" class="btn whatsapp" onclick="waFromForm()">WhatsApp Now</button>
+        <button type="submit" class="btn primary">Submit to Sheet</button>
+      </div>
+      <div class="small">“Submit to Sheet” आपके Google Sheet में entry सेव करेगा (नीचे SCRIPT URL replace करें).</div>
+    </form>
+  </div>
+</div>
+
+<script>
+  /* ====== SETTINGS ====== */
+  const CLINIC_WHATSAPP = "919905761688"; // country code के साथ
+  const APPS_SCRIPT_URL = "SCRIPT_URL_HERE"; 
+  // ↑ इसे अपने Google Apps Script (Web app) URL से replace करें.
+
+  /* ====== DOCTORS → WhatsApp ====== */
+  function waBook(doctor){
+    const msg = encodeURIComponent(
+      `Hello, I want to book an appointment.\nDoctor: ${doctor}\nName: \nMobile: \nPreferred Date: \nTime: \nProblem: `
+    );
+    window.open(`https://wa.me/${CLINIC_WHATSAPP}?text=${msg}`,'_blank');
+  }
+
+  /* ====== BOOKING MODAL (FORM) ====== */
+  function openBooking(doctor){
+    document.getElementById('selDoctor').value = doctor;
+    document.getElementById('doctorReadonly').value = doctor;
+    document.getElementById('bookingModal').classList.add('show');
+  }
+  function closeBooking(){
+    document.getElementById('bookingModal').classList.remove('show');
+  }
+  function waFromForm(){
+    const d = document.getElementById('selDoctor').value;
+    const n = document.getElementById('pName').value || '';
+    const m = document.getElementById('pMobile').value || '';
+    const dt = document.getElementById('pDate').value || '';
+    const tm = document.getElementById('pTime').value || '';
+    const pr = document.getElementById('pProblem').value || '';
+    const msg = encodeURIComponent(
+      `Hello, I want to book an appointment.\nDoctor: ${d}\nName: ${n}\nMobile: ${m}\nDate: ${dt}\nTime: ${tm}\nProblem: ${pr}`
+    );
+    window.open(`https://wa.me/${CLINIC_WHATSAPP}?text=${msg}`,'_blank');
+  }
+
+  // Submit booking to Google Sheet
+  document.getElementById('bookForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const payload = {
+      type:'booking',
+      doctor: document.getElementById('selDoctor').value,
+      name: document.getElementById('pName').value,
+      mobile: document.getElementById('pMobile').value,
+      date: document.getElementById('pDate').value,
+      time: document.getElementById('pTime').value,
+      problem: document.getElementById('pProblem').value,
+      ts: new Date().toISOString()
+    };
+    try{
+      const res = await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      alert('✅ Booking submitted! We will confirm shortly.');
+      closeBooking();
+      e.target.reset();
+    }catch(err){
+      alert('⚠️ Could not submit to sheet. Please check script URL.');
+      console.error(err);
+    }
+  });
+
+  /* ====== MEDICINES DATA ====== */
+  const meds = [
+    {name:'Paracetamol 500mg', mrp:20, disc:20},
+    {name:'Dolo-650', mrp:35, disc:20},
+    {name:'Crocin Advance', mrp:30, disc:20},
+    {name:'Azithromycin 500', mrp:120, disc:15},
+    {name:'Amoxicillin 250mg', mrp:45, disc:15},
+    {name:'Cough Syrup 100ml', mrp:60, disc:10},
+    {name:'Vitamin C 500mg', mrp:80, disc:20},
+    {name:'Pantoprazole 40mg', mrp:55, disc:18},
+    {name:'Cetirizine 10mg', mrp:18, disc:15},
+    {name:'ORS Packet', mrp:25, disc:10},
+    {name:'Calcium + D3', mrp:110, disc:20},
+    {name:'Ibuprofen 400mg', mrp:32, disc:15},
+    {name:'Metformin 500mg', mrp:42, disc:15},
+    {name:'Amlodipine 5mg', mrp:28, disc:15},
+    {name:'Multivitamin Tabs', mrp:95, disc:20},
+  ];
+  const medBody = document.getElementById('medBody');
+  function renderMeds(list){
+    medBody.innerHTML='';
+    list.forEach(m=>{
+      const final = Math.round(m.mrp*(1-(m.disc||0)/100));
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td data-label="Name">${m.name}</td>
+        <td data-label="MRP (₹)">${m.mrp}</td>
+        <td data-label="Discount %">${m.disc||0}</td>
+        <td data-label="Final Price (₹)">${final}</td>`;
+      medBody.appendChild(tr);
+    });
+  }
+  renderMeds(meds);
+
+  function filterMeds(){
+    const q = (document.getElementById('medSearch').value||'').toLowerCase();
+    const min = Number(document.getElementById('minMrp').value||0);
+    const out = meds.filter(m => m.name.toLowerCase().includes(q) && m.mrp>=min);
+    renderMeds(out);
+  }
+
+  function addMedicine(){
+    const name = document.getElementById('newMedName').value.trim();
+    const mrp = Number(document.getElementById('newMedMrp').value);
+    const disc = Number(document.getElementById('newMedDisc').value||0);
+    if(!name || !(mrp>0)){ alert('Name/MRP required'); return; }
+    meds.push({name, mrp, disc});
+    renderMeds(meds);
+    document.getElementById('newMedName').value='';
+    document.getElementById('newMedMrp').value='';
+    document.getElementById('newMedDisc').value='20';
+  }
+
+  async function saveMedicine(){
+    const name = document.getElementById('newMedName').value.trim();
+    const mrp = Number(document.getElementById('newMedMrp').value);
+    const disc = Number(document.getElementById('newMedDisc').value||0);
+    if(!name || !(mrp>0)){ alert('Name/MRP required'); return; }
+    const payload = {type:'medicine', name, mrp, discount:disc, ts:new Date().toISOString()};
+    try{
+      const res = await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      alert('✅ Medicine saved to sheet!');
+    }catch(e){
+      alert('⚠️ Could not save to sheet. Check script URL.');
+      console.error(e);
+    }
+  }
+</script>
 
 </body>
-</html>
+                                      </html>
+  
