@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service at a Glance</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: #121212;
+      color: #f4f4f4;
+    }
+    header {
+      background: #0077b6;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background: #023e8a;
+      padding: 10px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav input {
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+      margin-left: 20px;
+    }
+    section {
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 700px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    body.dark .card {
+      background: #1e1e1e;
+    }
+    .discount {
+      background: #90e0ef;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      text-align: center;
+    }
+    .discount h2 {
+      color: #03045e;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    footer {
+      background: #0077b6;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      margin-top: 30px;
+    }
+    .faq h3, .reviews h3 {
+      margin-top: 15px;
+    }
+    .review {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    body.dark .review {
+      background: #2a2a2a;
+    }
+    .dark-toggle {
+      float: right;
+      margin-right: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      color: yellow;
+    }
+    /* WhatsApp Floating Button */
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: white;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      text-decoration: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Service at a Glance</h1>
+    <p>Your Health & Daily Needs, Our Priority</p>
+    <span class="dark-toggle" onclick="toggleDark()">🌙</span>
+  </header>
+
+  <nav>
+    <a href="#appointment">Doctor</a>
+    <a href="#medicine">Medicine</a>
+    <a href="#labtest">Lab Tests</a>
+    <a href="#services">Other Services</a>
+    <a href="#faq">FAQ</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#booking">Book Now</a>
+    <a href="#contact">Contact</a>
+    <input type="text" id="search" placeholder="Search service..." onkeyup="searchService()">
+  </nav>
+
+  <!-- Doctor -->
+  <section id="appointment" class="card service">
+    <h2>Doctor's Appointment</h2>
+    <p>Book your doctor’s appointment quickly and easily with our online service. Choose the best doctor according to your need and availability.</p>
+  </section>
+
+  <!-- Medicine -->
+  <section id="medicine" class="card service">
+    <h2>Medicine at Discount</h2>
+    <div class="discount">
+      <h2>Flat 20% – 40% OFF</h2>
+      <p>Get all essential medicines delivered to your doorstep at a discount ranging from 20% to 40%. Reliable pharmacy partners, quick delivery, and genuine medicines.</p>
+      <button>Order Now</button>
+    </div>
+  </section>
+
+  <!-- Lab Tests -->
+  <section id="labtest" class="card service">
+    <h2>Lab Tests</h2>
+    <p>We provide all kinds of diagnostic lab tests including blood test, sugar test, urine test, thyroid, cholesterol and many more with trusted labs and quick reports.</p>
+    <button>Book Lab Test</button>
+  </section>
+
+  <!-- Other Services -->
+  <section id="services" class="card service">
+    <h2>Other Daily Services</h2>
+    <ul>
+      <li>✅ AC Service</li>
+      <li>✅ Car Service</li>
+      <li>✅ Bike Service</li>
+      <li>✅ Ration Delivery</li>
+      <li>✅ Mobile/DTH Recharge</li>
+    </ul>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="card faq">
+    <h2>Frequently Asked Questions</h2>
+    <h3>How to book a service?</h3>
+    <p>Go to the booking form, fill your details and choose the service. Our team will contact you.</p>
+    <h3>How to pay?</h3>
+    <p>You can pay online or cash on delivery depending on the service.</p>
+    <h3>How much time for delivery?</h3>
+    <p>Medicine & ration usually within 1-2 hours. Services as per schedule.</p>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="card reviews">
+    <h2>Customer Reviews</h2>
+    <div class="review">⭐⭐⭐⭐⭐ <br> “Very helpful platform, I booked a doctor easily.” – Ramesh Kumar</div>
+    <div class="review">⭐⭐⭐⭐ <br> “Medicines delivered quickly with good discount.” – Neha Singh</div>
+    <div class="review">⭐⭐⭐⭐⭐ <br> “AC Service was professional and affordable.” – Arjun Verma</div>
+  </section>
+
+  <!-- Booking Form -->
+  <section id="booking" class="card">
+    <h2>Book a Service</h2>
+    <form>
+      <label>Name:</label><br>
+      <input type="text" required><br><br>
+      <label>Mobile:</label><br>
+      <input type="tel" required><br><br>
+      <label>Service Type:</label><br>
+      <select required>
+        <option>Doctor Appointment</option>
+        <option>Medicine</option>
+        <option>Lab Test</option>
+        <option>AC Service</option>
+        <option>Car Service</option>
+        <option>Bike Service</option>
+        <option>Ration</option>
+        <option>Recharge</option>
+      </select><br><br>
+      <label>Date & Time:</label><br>
+      <input type="datetime-local" required><br><br>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="card">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:errormail.gamer@gmail.com">errormail.gamer@gmail.com</a></p>
+    <p>Phone: <a href="tel:+919905761688">+91 99057 61688</a></p>
+    <p>Address: Nagina Singh Colony, Near Hotel Amitansh, Gudri Bazar, Chapra, Bihar - 841301</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Service at a Glance | All Rights Reserved</p>
+  </footer>
+
+  <!-- WhatsApp Floating -->
+  <a class="whatsapp" href="https://wa.me/919905761688" target="_blank">💬</a>
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
+    function searchService() {
+      let input = document.getElementById('search').value.toLowerCase();
+      let services = document.getElementsByClassName('service');
+      for (let s of services) {
+        s.style.display = s.innerText.toLowerCase().includes(input) ? "" : "none";
+      }
+    }
+  </script>
+</body>
+</html>
