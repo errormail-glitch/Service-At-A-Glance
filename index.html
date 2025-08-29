@@ -3,178 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Service at a Glance</title>
+  <title>Service At A Glance</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #f9f9f9;
+      background: #f8f9fa;
     }
+
     header {
-      background: #007BFF;
+      background: #0077b6;
       color: white;
       padding: 15px;
       text-align: center;
     }
-    section {
-      padding: 20px;
-      margin: 10px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-    }
+
     h2 {
-      color: #007BFF;
+      background: #0096c7;
+      color: white;
+      padding: 10px;
+      margin: 0;
+      text-align: center;
     }
-    table {
+
+    section {
+      padding: 15px;
+    }
+
+    /* General Table */
+    .responsive-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      margin-bottom: 20px;
     }
-    table, th, td {
+    .responsive-table th,
+    .responsive-table td {
       border: 1px solid #ddd;
-    }
-    th, td {
-      padding: 10px;
+      padding: 8px;
       text-align: left;
+      font-size: 14px;
     }
-    th {
-      background: #007BFF;
-      color: white;
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .responsive-table thead {
+        display: none;
+      }
+      .responsive-table,
+      .responsive-table tbody,
+      .responsive-table tr,
+      .responsive-table td {
+        display: block;
+        width: 100%;
+      }
+      .responsive-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background: #fff;
+      }
+      .responsive-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+      .responsive-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+      }
     }
-    button {
-      background: #28a745;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #218838;
-    }
+
     footer {
-      background: #333;
+      background: #023e8a;
       color: white;
       text-align: center;
       padding: 15px;
       margin-top: 20px;
-    }
-    a {
-      color: #007BFF;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Service at a Glance</h1>
-  <p>One place for Doctors, Medicines, and Daily Services</p>
+  <h1>Service At A Glance</h1>
+  <p>All Services — Doctors, Medicines, Recharge, Ration & More</p>
 </header>
 
 <!-- Doctor Section -->
+<h2>Doctor Appointment</h2>
 <section>
-  <h2>Doctors Appointment</h2>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Specialist</th>
-      <th>Phone</th>
-      <th>Address</th>
-      <th>Timing</th>
-      <th>Fee</th>
-      <th>Action</th>
-    </tr>
-    <tr>
-      <td>Dr. Ravi Shankar Singh</td>
-      <td>Baby Specialist</td>
-      <td>86******71</td>
-      <td>Old Chirai Ghar Rd, Railway Colony, Daroga rai chowk, Chapra</td>
-      <td>9am - 7pm</td>
-      <td>₹300</td>
-      <td><button>Book</button></td>
-    </tr>
-    <tr>
-      <td>Dr. Renu Kashyap</td>
-      <td>Women Specialist</td>
-      <td>79******56</td>
-      <td>Near Jyoti Cinema, Sadhnapuri, Chapra</td>
-      <td>24x7</td>
-      <td>₹999</td>
-      <td><button>Book</button></td>
-    </tr>
-    <tr>
-      <td>Dr. Prakash Thakur</td>
-      <td>Chest, Heart, Kidney, Diabetes etc.</td>
-      <td>75*****654</td>
-      <td>Ramlila Mathia, Near Hotel Raj Lakshmi, Chapra</td>
-      <td>9am - 8pm</td>
-      <td>₹700</td>
-      <td><button>Book</button></td>
-    </tr>
+  <table class="responsive-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Speciality</th>
+        <th>Contact</th>
+        <th>Address</th>
+        <th>Timing</th>
+        <th>Fees</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="Name">Dr. Ravi Shankar Singh</td>
+        <td data-label="Speciality">Baby specialist</td>
+        <td data-label="Contact">86******71</td>
+        <td data-label="Address">Old Chirai Ghar Rd, Railway Colony, Chapra</td>
+        <td data-label="Timing">9am - 7pm</td>
+        <td data-label="Fees">₹300</td>
+      </tr>
+      <tr>
+        <td data-label="Name">Dr. Renu Kashyap</td>
+        <td data-label="Speciality">Women specialist</td>
+        <td data-label="Contact">79******56</td>
+        <td data-label="Address">Near Jyoti Cinema, Sadhnapuri, Chapra</td>
+        <td data-label="Timing">24x7</td>
+        <td data-label="Fees">₹999</td>
+      </tr>
+      <tr>
+        <td data-label="Name">Dr. Prakash Thakur</td>
+        <td data-label="Speciality">Chest, Heart, Kidney, Diabetes</td>
+        <td data-label="Contact">75*****654</td>
+        <td data-label="Address">Ramlila Mathia, Near Hotel Raj Lakshmi, Chapra</td>
+        <td data-label="Timing">9am - 8pm</td>
+        <td data-label="Fees">₹700</td>
+      </tr>
+    </tbody>
   </table>
 </section>
 
 <!-- Medicine Section -->
+<h2>Medicines</h2>
 <section>
-  <h2>Medicines</h2>
-  <table>
-    <tr>
-      <th>Medicine Name</th>
-      <th>MRP</th>
-      <th>Discount Price</th>
-    </tr>
-    <tr>
-      <td>Paracetamol 500mg</td>
-      <td>₹20</td>
-      <td>₹15</td>
-    </tr>
-    <tr>
-      <td>Dolo-650</td>
-      <td>₹35</td>
-      <td>₹28</td>
-    </tr>
-    <tr>
-      <td>Crocin Advance</td>
-      <td>₹30</td>
-      <td>₹24</td>
-    </tr>
-    <tr>
-      <td>Azithromycin 500</td>
-      <td>₹120</td>
-      <td>₹95</td>
-    </tr>
+  <table class="responsive-table">
+    <thead>
+      <tr>
+        <th>Medicine Name</th>
+        <th>MRP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="Medicine Name">Paracetamol 500mg</td>
+        <td data-label="MRP">₹20</td>
+      </tr>
+      <tr>
+        <td data-label="Medicine Name">Amoxicillin 250mg</td>
+        <td data-label="MRP">₹45</td>
+      </tr>
+      <tr>
+        <td data-label="Medicine Name">Cough Syrup</td>
+        <td data-label="MRP">₹60</td>
+      </tr>
+      <tr>
+        <td data-label="Medicine Name">Vitamin C Tablets</td>
+        <td data-label="MRP">₹80</td>
+      </tr>
+    </tbody>
   </table>
 </section>
 
 <!-- Services Section -->
+<h2>Services</h2>
 <section>
-  <h2>Other Services</h2>
   <ul>
     <li>AC Service</li>
     <li>Car Service</li>
     <li>Bike Service</li>
-    <li>Recharge</li>
-    <li>Ration</li>
+    <li>Recharge Service</li>
+    <li>Ration Delivery</li>
   </ul>
 </section>
 
 <!-- Contact Section -->
+<h2>Contact Us</h2>
 <section>
-  <h2>Contact Us</h2>
-  <p><b>Phone:</b> <a href="tel:+919905761688">+91 99057 61688</a></p>
-  <p><b>Email:</b> <a href="mailto:errormail.gamer@gmail.com">errormail.gamer@gmail.com</a></p>
-  <p><b>Address:</b> Nagina Singh colony, near Hotel Amitansh, Gudri Bazar, Chapra, Bihar - 841301</p>
-  <p><b>Google Map:</b> <a href="https://maps.google.com/?q=Nagina+Singh+Colony,+Gudri+Bazar,+Chapra,+Bihar+841301" target="_blank">View Location</a></p>
+  <p><b>Phone:</b> +91 99057 61688</p>
+  <p><b>Email:</b> errormail.gamer@gmail.com</p>
+  <p><b>Address:</b> Nagina Singh colony, Near Hotel Amitansh, Gudri Bazar, Chapra, Bihar-841301</p>
 </section>
 
 <footer>
-  <p>&copy; 2025 Service at a Glance. All rights reserved.</p>
+  <p>© 2025 Service At A Glance | All Rights Reserved</p>
 </footer>
 
 </body>
