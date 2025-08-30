@@ -1,250 +1,539 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Service at a Glance</title>
+<title>Service at a Glance – Chapra Healthcare Services</title>
 <style>
-/* General */
-body { font-family: Arial, sans-serif; margin:0; background:#f2f2f2; }
-h1,h2,h3 { color:#0077cc; margin-bottom:10px; }
-section { max-width:1000px; margin:20px auto; padding:20px; }
+body {font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f4f4; color:#333; transition:0.3s;}
+body.dark {background:#121212; color:#f4f4f4;}
+header{background:#0077b6; color:white; padding:20px; text-align:center; position:relative;}
+nav{background:#023e8a; padding:10px; text-align:center; position:sticky; top:0; z-index:1000;}
+nav a{color:white; margin:0 10px; text-decoration:none; font-weight:bold;}
+nav input{padding:5px; border-radius:5px; border:none; margin-left:15px;}
+.card{background:white; margin:20px auto; padding:20px; border-radius:10px; max-width:900px; box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+body.dark .card{background:#1e1e1e;}
+button{padding:10px 20px; background:#0077b6; color:white; border:none; border-radius:5px; cursor:pointer;}
+footer{background:#0077b6; color:white; text-align:center; padding:10px; margin-top:20px;}
+.dark-toggle{float:right; margin-right:20px; cursor:pointer; font-weight:bold; color:yellow;}
+#loginBtn{position:absolute;top:20px;right:80px;padding:8px 12px;cursor:pointer;border:none;border-radius:5px;background:#ffd700;color:#000;font-weight:bold;}
+.hidden{display:none;}
+.whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;color:white;border-radius:50%;width:55px;height:55px;display:flex;align-items:center;justify-content:center;font-size:28px;text-decoration:none;z-index:1000;}
+input,select,textarea{padding:5px;width:95%;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
+.review{background:#eee;padding:8px;margin:8px 0;border-radius:5px;}
+body.dark .review{background:#2a2a2a;}
+.rating span{color:gold;}
 
-/* Header & Nav */
-header { background:#0077cc; color:white; padding:20px; text-align:center; }
-nav { display:flex; justify-content:center; flex-wrap:wrap; background:#005fa3; }
-nav a { color:white; text-decoration:none; margin:5px 15px; padding:8px 12px; border-radius:5px; font-weight:bold; transition:0.3s; }
-nav a:hover { background:#004080; }
+/* Table styling for doctors list */
+.doctors-table {width:100%; border-collapse:collapse; margin-top:15px;}
+.doctors-table th, .doctors-table td {border:1px solid #ccc; padding:12px; text-align:left;}
+.doctors-table th {background-color:#3498db; color:white;}
+.doctors-table tr:nth-child(even) {background-color:#ecf0f1;}
+body.dark .doctors-table th {background-color:#2c3e50;}
+body.dark .doctors-table tr:nth-child(even) {background-color:#34495e;}
+body.dark .doctors-table {color:#f4f4f4;}
 
-/* Cards */
-.card { background:white; padding:15px; margin:10px 0; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; }
-button { padding:8px 15px; background:#0077cc; color:white; border:none; border-radius:5px; cursor:pointer; transition:0.3s; }
-button:hover { background:#005fa3; }
-
-/* Inputs */
-input[type=text], input[type=password], input[type=number] { padding:10px; width:100%; max-width:400px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px; }
-
-/* Login */
-#loginSection { max-width:400px; margin:50px auto; background:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
-
-/* Admin Panel */
-#adminPanel { display:none; background:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
-#logoutBtn { background:#cc5500; margin-bottom:15px; }
-#logoutBtn:hover { background:#993d00; }
-
-@media(max-width:600px){ .card{ flex-direction:column; align-items:flex-start; } }
+/* Responsive design */
+@media (max-width: 768px) {
+    nav a {display:block; margin:5px 0;}
+    nav input {width:80%; margin:10px auto;}
+    .doctors-table {font-size:14px;}
+    .doctors-table th, .doctors-table td {padding:8px;}
+}
 </style>
 </head>
 <body>
 
 <header>
-<h1>Service at a Glance</h1>
+<h1>Service at a Glance - Chapra</h1>
+<p>आपकी स्वास्थ्य और दैनिक आवश्यकताएं, हमारी प्राथमिकता</p>
+<span class="dark-toggle" onclick="toggleDark()">🌙</span>
+<button id="loginBtn" onclick="toggleCustomerForm()">Login</button>
+<a href="#" onclick="toggleAdminPanel()" style="position:absolute; top:20px; right:20px; color:white; font-weight:bold;">Admin</a>
 </header>
 
 <nav>
-<a href="#services">Services</a>
-<a href="#medicines">Medicines</a>
-<a href="#doctors">Doctors</a>
-<a href="#contact">Contact</a>
-<a href="#adminPanel" onclick="showAdminLogin()">Admin</a>
+<a href="#doctors">डॉक्टर</a>
+<a href="#medicine">दवाएं</a>
+<a href="#labtest">लैब टेस्ट</a>
+<a href="#services">सेवाएं</a>
+<a href="#booking">बुक करें</a>
+<a href="#feedback">फीडबैक</a>
+<a href="#contact">संपर्क</a>
+<input type="text" id="search" placeholder="Search..." onkeyup="searchService()">
 </nav>
 
-<!-- Services Section -->
-<section id="services">
-<h2>Our Services</h2>
-<ul>
-<li>AC Service</li>
-<li>Car Service</li>
-<li>Bike Service</li>
-<li>Ration</li>
-<li>Recharge</li>
-</ul>
-</section>
-
-<!-- Medicines Section -->
-<section id="medicines">
-<h2>Medicines</h2>
-<input type="text" id="medicineSearch" placeholder="Search medicine...">
-<div id="medicineList"></div>
-</section>
-
-<!-- Doctors Section -->
-<section id="doctors">
-<h2>Our Doctors</h2>
-<div id="doctorList"></div>
-</section>
-
-<!-- Contact Section -->
-<section id="contact">
-<h2>Contact Us</h2>
-<p>Address: Nagina Singh Colony near Hotel Amitansh, Gudri Bazar, Chapra, Bihar-841301</p>
-</section>
-
-<!-- Admin Login -->
-<div id="loginSection" style="display:none;">
-<h1>Admin Login</h1>
-<input type="text" id="adminId" placeholder="Admin ID">
-<input type="password" id="adminPass" placeholder="Password">
-<button onclick="login()">Login</button>
-<p id="loginError" style="color:red;"></p>
+<!-- Customer Login -->
+<section id="customer-login" class="card hidden">
+<h2>Customer Login / Signup</h2>
+<div id="login-form">
+<label>Email:</label><br>
+<input type="email" id="loginEmail" placeholder="Enter email"><br>
+<label>Password:</label><br>
+<input type="password" id="loginPassword" placeholder="Enter password"><br>
+<button onclick="customerLogin()">Login</button>
+<p>New customer? <a href="#" onclick="showSignup()">Signup here</a></p>
 </div>
+<div id="signup-form" class="hidden">
+<label>Name:</label><br>
+<input type="text" id="signupName" placeholder="Enter name"><br>
+<label>Email:</label><br>
+<input type="email" id="signupEmail" placeholder="Enter email"><br>
+<label>Password:</label><br>
+<input type="password" id="signupPassword" placeholder="Enter password"><br>
+<button onclick="customerSignup()">Signup</button>
+<p>Already have account? <a href="#" onclick="showLogin()">Login here</a></p>
+</div>
+<div id="customer-dashboard" class="hidden">
+<h3>Welcome, <span id="customerName"></span></h3>
+<button onclick="customerLogout()">Logout</button>
+<h4>Your Bookings</h4>
+<div id="customerBookings"></div>
+<h4>Wishlist</h4>
+<div id="wishlist"></div>
+</div>
+</section>
 
 <!-- Admin Panel -->
-<section id="adminPanel">
+<section id="admin-panel" class="card hidden">
 <h2>Admin Panel</h2>
-<button id="logoutBtn" onclick="logout()">Logout</button>
-
-<h3>Add Medicine</h3>
-<input type="text" id="medName" placeholder="Medicine Name">
-<input type="number" id="medDiscount" placeholder="Discount %">
-<button onclick="addMedicine()">Add Medicine</button>
-<div id="medList"></div>
-
-<h3>Add Doctor</h3>
-<input type="text" id="docName" placeholder="Doctor Name">
-<input type="text" id="docSpecialty" placeholder="Specialty">
-<button onclick="addDoctor()">Add Doctor</button>
-<div id="docList"></div>
+<div id="admin-login">
+<label>Admin Password:</label><br>
+<input type="password" id="adminPass"><br>
+<button onclick="adminLogin()">Login</button>
+</div>
+<div id="admin-dashboard" class="hidden">
+<h3>Welcome Admin</h3>
+<button onclick="adminLogout()">Logout</button>
+<h4>Manage Doctors</h4><div id="admin-doctors"></div>
+<h4>Manage Medicines</h4><div id="admin-medicines"></div>
+<h4>Manage Lab Tests</h4><div id="admin-labs"></div>
+<h4>Manage Services</h4><div id="admin-services"></div>
+<h4>Bookings & Payments</h4><div id="allBookings"></div>
+<h4>Feedback</h4><div id="allFeedback"></div>
+<h4>Analytics</h4><div id="analytics"></div>
+</div>
 </section>
 
+<!-- Doctors Section with Complete List -->
+<section id="doctors" class="card service">
+<h2>Chapra के प्रमुख डॉक्टर</h2>
+<div class="table-container">
+<table class="doctors-table">
+    <thead>
+        <tr>
+            <th>नाम</th>
+            <th>विशेषज्ञता</th>
+            <th>अस्पताल/क्लिनिक</th>
+            <th>पता</th>
+            <th>समय</th>
+            <th>फीस</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="doctors-list-body">
+        <!-- Doctors will be populated by JavaScript -->
+    </tbody>
+</table>
+</div>
+</section>
+
+<!-- Medicines -->
+<section id="medicine" class="card service">
+<h2>Medicines</h2>
+<input type="text" id="medicineSearch" placeholder="Search medicine..." onkeyup="searchMedicine()">
+<div id="medicines-list"></div>
+</section>
+
+<!-- Lab Tests -->
+<section id="labtest" class="card service">
+<h2>Lab Tests</h2>
+<div id="labtests-list"></div>
+</section>
+
+<!-- Other Services -->
+<section id="services" class="card service">
+<h2>Other Services</h2>
+<div id="other-services-list"></div>
+</section>
+
+<!-- Booking Form -->
+<section id="booking" class="card">
+<h2>Book a Service</h2>
+<form id="bookingForm">
+<label>Name:</label><br>
+<input type="text" id="bookName" required><br>
+<label>Mobile:</label><br>
+<input type="tel" id="bookMobile" required><br>
+<label>Service Type:</label><br>
+<select id="bookService" required></select><br>
+<label>Date & Time:</label><br>
+<input type="datetime-local" id="bookDateTime" required><br>
+<label>Payment:</label><br>
+<select id="bookPayment"><option>Cash on Delivery</option><option>Online Payment</option></select><br><br>
+<button type="button" id="payBtn">Book & Pay</button>
+</form>
+</section>
+
+<!-- Feedback -->
+<section id="feedback" class="card">
+<h2>Leave Feedback</h2>
+<label>Name:</label><br>
+<input type="text" id="feedbackName"><br>
+<label>Service / Doctor:</label><br>
+<input type="text" id="feedbackService"><br>
+<label>Feedback:</label><br>
+<textarea id="feedbackText" rows="3"></textarea><br>
+<button onclick="submitFeedback()">Submit Feedback</button>
+<div id="feedbackList"></div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="card">
+<h2>Contact Us</h2>
+<p>Email: <a href="mailto:errormail.gamer@gmail.com">errormail.gamer@gmail.com</a></p>
+<p>Phone: <a href="tel:+919905761688">+91 99057 61688</a></p>
+<p>Address: Nagina Singh Colony, Near Hotel Amitansh, Gudri Bazar, Chapra, Bihar - 841301</p>
+</section>
+
+<footer>
+<p>&copy; 2025 Service at a Glance | All Rights Reserved</p>
+</footer>
+
+<a class="whatsapp" href="https://wa.me/919905761688" target="_blank">💬</a>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-// Admin Credentials
-const ADMIN_ID = "@oven_c3";
-const ADMIN_PASS = "Gaming@2580";
-
-// Show Admin Login
-function showAdminLogin(){
-  document.getElementById('loginSection').style.display = 'block';
-  document.getElementById('adminPanel').style.display = 'none';
+// Dark mode toggle
+function toggleDark() {
+  document.body.classList.toggle('dark');
 }
 
-// Login Function
-function login(){
-  const id = document.getElementById('adminId').value;
-  const pass = document.getElementById('adminPass').value;
-  const error = document.getElementById('loginError');
-  if(id === ADMIN_ID && pass === ADMIN_PASS){
-    document.getElementById('loginSection').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    renderMedicines();
-    renderDoctors();
-  } else {
-    error.textContent = 'Invalid ID or Password!';
-  }
+// Customer login/signup toggle
+function toggleCustomerForm() {
+  document.getElementById('customer-login').classList.toggle('hidden');
+}
+function showSignup() {
+  document.getElementById('login-form').classList.add('hidden');
+  document.getElementById('signup-form').classList.remove('hidden');
+}
+function showLogin() {
+  document.getElementById('login-form').classList.remove('hidden');
+  document.getElementById('signup-form').classList.add('hidden');
 }
 
-// Logout Function
-function logout(){
-  document.getElementById('adminPanel').style.display = 'none';
-  document.getElementById('loginSection').style.display = 'block';
-  document.getElementById('adminId').value = '';
-  document.getElementById('adminPass').value = '';
-  document.getElementById('loginError').textContent = '';
-}
+let customers = {};
 
-// Medicines
-function renderMedicines() {
-  const searchTerm = document.getElementById('medicineSearch')?.value.toLowerCase() || '';
-  const medicines = JSON.parse(localStorage.getItem('medicines')||'[]');
-  const container = document.getElementById('medicineList');
-  if(!container) return;
-  container.innerHTML = '';
-  medicines.forEach(med => {
-    if(med.name.toLowerCase().includes(searchTerm)){
-      const div=document.createElement('div');
-      div.className='card';
-      div.innerHTML=`<div><strong>${med.name}</strong> - ${med.discount}% off</div>
-      <button onclick="alert('Ordered ${med.name}!')">Order</button>`;
-      container.appendChild(div);
+// Customer signup
+function customerSignup() {
+  let n = document.getElementById('signupName').value.trim(),
+      e = document.getElementById('signupEmail').value.trim().toLowerCase(),
+      p = document.getElementById('signupPassword').value;
+  if (n && e && p) {
+    if(customers[e]){
+      alert("User already exists, please login.");
+      showLogin();
+      return;
     }
+    customers[e] = { name: n, password: p, bookings: [], wishlist: [] };
+    alert("Signup successful");
+    showLogin();
+  } else {
+    alert("Please fill all fields");
+  }
+}
+
+// Customer login
+function customerLogin() {
+  let e = document.getElementById('loginEmail').value.trim().toLowerCase(),
+      p = document.getElementById('loginPassword').value;
+  if (customers[e]) {
+    if (customers[e].password === p) {
+      document.getElementById('customer-login').classList.add('hidden');
+      document.getElementById('customer-dashboard').classList.remove('hidden');
+      document.getElementById('customerName').innerText = customers[e].name;
+      displayCustomerBookings(e);
+    } else {
+      alert("Wrong password");
+    }
+  } else {
+    alert("User not found");
+  }
+}
+
+// Customer logout
+function customerLogout() {
+  document.getElementById('customer-dashboard').classList.add('hidden');
+  document.getElementById('loginEmail').value = "";
+  document.getElementById('loginPassword').value = "";
+}
+
+// Complete Doctors List from your data
+let doctors = [
+  { name: "डॉ. ओंकार नाथ", specialist: "जनरल फिजीशियन", hospital: "Arogyadham Chapra", address: "लल्लू मोड़, भगवान बाजार, चपरा", timing: "सोम-शनि 9:00 AM - 5:00 PM", fees: 300 },
+  { name: "डॉ. सुधांशु शेखर मिश्रा", specialist: "जनरल फिजीशियन", hospital: "Maa Bhagwati Health Care Centre", address: "भगवान बाजार, चपरा", timing: "सोम-शनि 9:00 AM - 2:00 PM", fees: 250 },
+  { name: "डॉ. पंकज कुमार", specialist: "जनरल फिजीशियन", hospital: "रेलवे कॉलोनी क्लिनिक", address: "रेलवे कॉलोनी रोड, भगवान बाजार, चपरा", timing: "सोम-शनि 9:00 AM - 2:00 PM", fees: 300 },
+  { name: "डॉ. रिषव प्रकाश", specialist: "जनरल फिजीशियन", hospital: "Daroga Rai Chowk Clinic", address: "दरोगा राय चौक, चपरा", timing: "सोम-बुध, शुक्र, शनि 9:00 AM - 2:00 PM; गुरु 9:00 AM - 5:00 PM", fees: 350 },
+  { name: "डॉ. रत्नेश्वर सिंह", specialist: "जनरल फिजीशियन", hospital: "Joginiya Kothi Clinic", address: "जोगिनिया कोठी, चपरा", timing: "सोम-रवि 9:00 AM - 2:00 PM", fees: 250 },
+  { name: "डॉ. रिषव कुमार", specialist: "जनरल फिजीशियン", hospital: "नवाजी टोला क्लिनिक", address: "नवाजी टोला, चपरा", timing: "सोम-शनि 9:00 AM - 2:00 PM", fees: 300 },
+  { name: "डॉ. सुधीर कुमार", specialist: "जनरल फिजीशियन", hospital: "भगवान बाजार क्लिनिक", address: "भगवान बाजार, चपरा", timing: "सोम-शनि 9:00 AM - 2:00 PM", fees: 250 },
+  { name: "डॉ. सौरभ शेखर", specialist: "जनरल फिजीशियन", hospital: "नवाजी टोला क्लिनिक", address: "नवाजी टोला, चपरा", timing: "सोम-शनि 9:00 AM - 2:00 PM", fees: 300 },
+  { name: "डॉ. अभय कृष्ण सिंह", specialist: "जनरल फिजीशियन", hospital: "भगवान बाजार क्लिनिक", address: "भगवान बाजार, चपरा", timing: "सोम-शनि 9:00 AM - 2:00 PM", fees: 250 },
+  { name: "डॉ. राकेश कुमार", specialist: "जनरल फिजीशियन", hospital: "भगवान बाजार क्लिनिक", address: "भगवान बाजार, चपरा", timing: "सोम-शनि 9:00 AM - 2:00 PM", fees: 300 },
+  { name: "डॉ. रेखा देवी", specialist: "गाइनकोलॉजिस्ट", hospital: "Maha Devi Nursing Home", address: "माल गोदाम रोड, चपरा", timing: "सोम-शनि 9:00 AM - 5:00 PM", fees: 400 },
+  { name: "डॉ. संजय मिश्रा", specialist: "ऑर्थोपेडिक", hospital: "Shreeram Hospital", address: "भगवान बाजार, चपरा", timing: "सोम-शनि 10:00 AM - 5:00 PM", fees: 350 },
+  { name: "डॉ. नीलम कुमारी", specialist: "पेडियाट्रिशियन", hospital: "City Nursing Home", address: "रेलवे स्टेशन रोड, चपरा", timing: "सोम-शनि 10:00 AM - 6:00 PM", fees: 300 },
+  { name: "डॉ. फीरोज क़मर", specialist: "जनरल फिजीशियन", hospital: "Bihar Nursing Home", address: "कचहरी रोड, चपरा", timing: "सोम-शनि 10:00 AM - 6:00 PM", fees: 250 },
+  { name: "डॉ. जय कुमार", specialist: "जनरल फिजीशियन", hospital: "Gandhi Hospital", address: "गांधी चौक, चपरा", timing: "सोम-शनि 9:00 AM - 5:00 PM", fees: 300 }
+];
+
+let medicines = [
+  { name: "Paracetamol", price: 50 },
+  { name: "Vitamin C", price: 80 },
+  { name: "Cough Syrup", price: 120 }
+];
+
+let labtests = [
+  { name: "Blood Test", price: 200 },
+  { name: "Sugar Test", price: 150 },
+  { name: "Complete Blood Count", price: 500 },
+  { name: "Liver Function Test", price: 600 },
+  { name: "Kidney Function Test", price: 600 },
+  { name: "Lipid Profile", price: 550 },
+  { name: "Thyroid Test", price: 400 },
+  { name: "Urine Test", price: 100 },
+  { name: "HIV Test", price: 700 },
+  { name: "Hepatitis B Test", price: 650 }
+];
+
+let services = [
+  { name: "AC Service", price: 1000 },
+  { name: "Car Service", price: 2000 },
+  { name: "Bike Service", price: 1500 },
+  { name: "Ration", price: 500 },
+  { name: "Recharge", price: 300 }
+];
+
+let bookings = [];
+let feedbacks = [];
+
+// Display doctors in table format
+function displayDoctorsTable() {
+  let tbody = document.getElementById('doctors-list-body');
+  tbody.innerHTML = "";
+  doctors.forEach(d => {
+    let tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${d.name}</td>
+      <td>${d.specialist}</td>
+      <td>${d.hospital}</td>
+      <td>${d.address}</td>
+      <td>${d.timing}</td>
+      <td>₹${d.fees}</td>
+      <td><button onclick="prefillBooking('${d.name}')">Book Now</button></td>
+    `;
+    tbody.appendChild(tr);
   });
+}
 
-  // Render Admin List if admin panel visible
-  const medAdminList = document.getElementById('medList');
-  if(medAdminList){
-    medAdminList.innerHTML='';
-    medicines.forEach((med,index)=>{
-      const div=document.createElement('div');
-      div.className='card';
-      div.innerHTML=`<div>${med.name} - ${med.discount}%</div>
-      <button onclick="deleteMedicine(${index})">Delete</button>`;
-      medAdminList.appendChild(div);
-    });
+function displayMedicines() {
+  let c = document.getElementById('medicines-list');
+  c.innerHTML = "";
+  medicines.forEach(m => {
+    let div = document.createElement('div');
+    div.classList.add('card');
+    div.innerHTML = `<b>${m.name}</b> - ₹${m.price}`;
+    c.appendChild(div);
+  });
+}
+
+function searchMedicine() {
+  let s = document.getElementById('medicineSearch').value.toLowerCase();
+  let c = document.getElementById('medicines-list');
+  c.innerHTML = "";
+  medicines.filter(m => m.name.toLowerCase().includes(s)).forEach(med => {
+    let div = document.createElement('div');
+    div.classList.add('card');
+    div.innerHTML = `<b>${med.name}</b> - ₹${med.price}`;
+    c.appendChild(div);
+  });
+}
+
+function displayLabTests() {
+  let c = document.getElementById('labtests-list');
+  c.innerHTML = "";
+  labtests.forEach(l => {
+    let div = document.createElement('div');
+    div.classList.add('card');
+    div.innerHTML = `<b>${l.name}</b> - ₹${l.price}<br><button onclick="prefillBooking('${l.name}')">Book Now</button>`;
+    c.appendChild(div);
+  });
+}
+
+function displayServices() {
+  let c = document.getElementById('other-services-list');
+  c.innerHTML = "";
+  services.forEach(s => {
+    let div = document.createElement('div');
+    div.classList.add('card');
+    div.innerHTML = `<b>${s.name}</b><br><button onclick="prefillBooking('${s.name}')">Book Now</button>`;
+    c.appendChild(div);
+  });
+}
+
+// Prefill booking form and focus name input
+function prefillBooking(item) {
+  document.getElementById('bookService').value = item;
+  document.getElementById('bookName').focus();
+  alert("Booking form ready for " + item);
+}
+
+// Get price of service by name
+function getServicePrice(serviceName) {
+  let found = doctors.find(d => d.name === serviceName);
+  if (found) return found.fees;
+  found = labtests.find(l => l.name === serviceName);
+  if (found) return found.price;
+  found = services.find(s => s.name === serviceName);
+  if (found) return found.price;
+  return 0;
+}
+
+// Booking submission
+function submitBooking() {
+  let n = document.getElementById('bookName').value.trim(),
+      m = document.getElementById('bookMobile').value.trim(),
+      s = document.getElementById('bookService').value,
+      d = document.getElementById('bookDateTime').value,
+      p = document.getElementById('bookPayment').value;
+
+  if (n && m && s && d) {
+    let price = getServicePrice(s);
+    let b = { name: n, mobile: m, service: s, datetime: d, payment: p, amount: price };
+    bookings.push(b);
+    alert("Booking Submitted");
+    displayAllBookings();
+
+    // If user logged in, add booking to their record
+    let loggedInEmail = getLoggedInCustomerEmail();
+    if (loggedInEmail) {
+      customers[loggedInEmail].bookings.push(b);
+      displayCustomerBookings(loggedInEmail);
+    }
+
+    if (p === "Online Payment") {
+      payRazor(b);
+    }
+  } else {
+    alert("Please fill all fields");
   }
 }
 
-function addMedicine(){
-  const name=document.getElementById('medName').value;
-  const discount=document.getElementById('medDiscount').value;
-  if(!name || !discount){ alert('Enter valid data!'); return; }
-  const medicines=JSON.parse(localStorage.getItem('medicines')||'[]');
-  medicines.push({name,discount});
-  localStorage.setItem('medicines',JSON.stringify(medicines));
-  renderMedicines();
-  document.getElementById('medName').value='';
-  document.getElementById('medDiscount').value='';
-}
-
-function deleteMedicine(index){
-  const medicines=JSON.parse(localStorage.getItem('medicines')||'[]');
-  medicines.splice(index,1);
-  localStorage.setItem('medicines',JSON.stringify(medicines));
-  renderMedicines();
-}
-
-// Doctors
-function renderDoctors(){
-  const doctors = JSON.parse(localStorage.getItem('doctors')||'[]');
-  const container = document.getElementById('doctorList');
-  if(container){
-    container.innerHTML='';
-    doctors.forEach(doc=>{
-      const div=document.createElement('div');
-      div.className='card';
-      div.innerHTML=`<div><strong>${doc.name}</strong> - ${doc.specialty}</div>`;
-      container.appendChild(div);
-    });
+// Helper to get logged in customer email
+function getLoggedInCustomerEmail() {
+  let custName = document.getElementById('customerName').innerText;
+  for (let email in customers) {
+    if (customers[email].name === custName) return email;
   }
+  return null;
+}
 
-  const docAdminList=document.getElementById('docList');
-  if(docAdminList){
-    docAdminList.innerHTML='';
-    doctors.forEach((doc,index)=>{
-      const div=document.createElement('div');
-      div.className='card';
-      div.innerHTML=`<div>${doc.name} - ${doc.specialty}</div>
-      <button onclick="deleteDoctor(${index})">Delete</button>`;
-      docAdminList.appendChild(div);
-    });
+// Display all bookings (admin)
+function displayAllBookings() {
+  let c = document.getElementById('allBookings');
+  if (!c) return;
+  c.innerHTML = "";
+  bookings.forEach((b, i) => {
+    let div = document.createElement('div');
+    div.classList.add('review');
+    div.innerHTML = `${b.name} - ${b.service} on ${b.datetime} (${b.payment}) - ₹${b.amount}`;
+    c.appendChild(div);
+  });
+}
+
+// Display bookings for logged in customer only
+function displayCustomerBookings(email) {
+  let c = document.getElementById('customerBookings');
+  c.innerHTML = "";
+  bookings.filter(b => customers[email].bookings.includes(b)).forEach(b => {
+    let div = document.createElement('div');
+    div.classList.add('review');
+    div.innerHTML = `${b.service} on ${b.datetime} (${b.payment}) - ₹${b.amount}`;
+    c.appendChild(div);
+  });
+}
+
+// Feedback submission
+function submitFeedback() {
+  let n = document.getElementById('feedbackName').value.trim(),
+      s = document.getElementById('feedbackService').value.trim(),
+      t = document.getElementById('feedbackText').value.trim();
+  if (n && s && t) {
+    feedbacks.push({ name: n, service: s, text: t });
+    displayFeedback();
+    alert("Thank you for your feedback");
+    document.getElementById('feedbackName').value = "";
+    document.getElementById('feedbackService').value = "";
+    document.getElementById('feedbackText').value = "";
+  } else {
+    alert("Please fill all fields");
   }
 }
 
-function addDoctor(){
-  const name=document.getElementById('docName').value;
-  const specialty=document.getElementById('docSpecialty').value;
-  if(!name || !specialty){ alert('Enter valid data!'); return; }
-  const doctors=JSON.parse(localStorage.getItem('doctors')||'[]');
-  doctors.push({name,specialty});
-  localStorage.setItem('doctors',JSON.stringify(doctors));
-  renderDoctors();
-  document.getElementById('docName').value='';
-  document.getElementById('docSpecialty').value='';
+// Display all feedbacks
+function displayFeedback() {
+  let c = document.getElementById('feedbackList');
+  c.innerHTML = "";
+  feedbacks.forEach(f => {
+    let div = document.createElement('div');
+    div.classList.add('review');
+    div.innerHTML = `<b>${f.name}</b> (${f.service}) : ${f.text}`;
+    c.appendChild(div);
+  });
 }
 
-function deleteDoctor(index){
-  const doctors=JSON.parse(localStorage.getItem('doctors')||'[]');
-  doctors.splice(index,1);
-  localStorage.setItem('doctors',JSON.stringify(doctors));
-  renderDoctors();
+// Razorpay payment integration
+function payRazor(b) {
+  var options = {
+    "key": "YOUR_RAZORPAY_KEY",
+    "amount": b.amount * 100,
+    "currency": "INR",
+    "name": "Service at a Glance",
+    "description": b.service,
+    "handler": function (response) {
+      alert("Payment success! ID: " + response.razorpay_payment_id);
+    },
+    "prefill": {
+      "name": b.name,
+      "contact": b.mobile
+    },
+    "theme": {
+      "color": "#0077b6"
+    }
+  };
+  var rzp = new Razorpay(options);
+  rzp.open();
 }
 
-// Event listener for medicine search
-document.getElementById('medicineSearch')?.addEventListener('input', renderMedicines);
+// Admin panel toggle and login
+function toggleAdminPanel() {
+  document.getElementById('admin-panel').classList.toggle('hidden');
+}
+function adminLogin() {
+  let p = document.getElementById('adminPass').value;
+  if (p === "Gaming@2580") {
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-dashboard').classList.remove('hidden');
+    loadAdminData();
+  } else {
+    alert("Wrong password");
+  }
+}
+function adminLogout() {
+  document.getElementById('admin-dashboard').classList.add('hidden');
+  document.getElementById('admin-login').classList.remove('hidden');
+  document.getElementById('adminPass').value = "";
+}
 
-// Initial render
-renderMedicines();
-renderDoctors();
-</script>
-
-</body>
-</html>
+// Load admin data
+function 
